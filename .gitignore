@@ -44,6 +44,5 @@ credentials.json
 *.tsbuildinfo
 
 # generated native folders
-/ios
 /android
 

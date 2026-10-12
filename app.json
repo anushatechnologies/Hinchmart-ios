@@ -54,9 +54,6 @@
             ]
           }
         ]
-      },
-      "config": {
-        "googleMapsApiKey": "AIzaSyBQHBaFfRCHgCGKIpSm-EOsVy8dExFToeA"
       }
     },
     "android": {
