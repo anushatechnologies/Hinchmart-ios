@@ -88,6 +88,15 @@
 - **Status**: **PASSED & FINISHED (100% SUCCESS)**
 - **Production IPA Download URL**: [Download Production IPA (WO0ZobAOFUCh-qp31vF-T-LUOOJqJ9OZRHjVxrQC2cU.ipa)](https://expo.dev/artifacts/eas/WO0ZobAOFUCh-qp31vF-T-LUOOJqJ9OZRHjVxrQC2cU.ipa)
 
+### 2.9 App Store Connect & TestFlight Submission
+- **Command**: `npx eas-cli submit --platform ios --id a3ce654d-d0b7-40ce-bccb-ecbff5cb9968`
+- **Status**: **SUBMITTED & UPLOADED (100% SUCCESS)**
+- **App Store Connect App ID (`ascAppId`)**: `6821259523`
+- **App Store Connect API Key**: `8LR8F38773` (`[Expo] EAS Submit wLuLGdb-50`)
+- **TestFlight Internal Group**: `Team (Expo)`
+- **TestFlight Access Enabled For**: `adakamahesh@gmail.com`
+- **App Store Connect TestFlight URL**: [https://appstoreconnect.apple.com/apps/6821259523/testflight/ios](https://appstoreconnect.apple.com/apps/6821259523/testflight/ios)
+
 ---
 
 ## 3. Environment Boundaries & Verification Status Matrix
@@ -103,5 +112,7 @@
 | **Apple Distribution Cert** | **CONFIGURED & ACTIVE** | Serial `43143BD409CEAA56A7C0F0979C4CC890` |
 | **Apple Provisioning Profile**| **CONFIGURED & ACTIVE** | ID `8G7W68KNU3` for `com.hinchmart` |
 | **Production IPA Build** | **PASSED & READY** | [Download .ipa](https://expo.dev/artifacts/eas/WO0ZobAOFUCh-qp31vF-T-LUOOJqJ9OZRHjVxrQC2cU.ipa) |
+| **App Store Connect Upload**| **SUBMITTED & PROCESSING**| [App Store Connect TestFlight](https://appstoreconnect.apple.com/apps/6821259523/testflight/ios) |
+
 
 
