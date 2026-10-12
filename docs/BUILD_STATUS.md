@@ -83,9 +83,10 @@
 - **Command**: `npx eas-cli build --platform ios --profile production --non-interactive`
 - **Target Profile**: `production` (Release build, App Store distribution)
 - **Target Platform**: iOS (`.ipa`)
-- **Build ID**: `0192c11e-0043-48b1-9591-13e65baa823f`
-- **Live Build Dashboard**: `https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/0192c11e-0043-48b1-9591-13e65baa823f`
-- **Status**: **IN PROGRESS (Compiling on EAS macOS worker)**
+- **Build ID**: `a3ce654d-d0b7-40ce-bccb-ecbff5cb9968`
+- **Live Build Dashboard**: `https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/a3ce654d-d0b7-40ce-bccb-ecbff5cb9968`
+- **Status**: **PASSED & FINISHED (100% SUCCESS)**
+- **Production IPA Download URL**: [Download Production IPA (WO0ZobAOFUCh-qp31vF-T-LUOOJqJ9OZRHjVxrQC2cU.ipa)](https://expo.dev/artifacts/eas/WO0ZobAOFUCh-qp31vF-T-LUOOJqJ9OZRHjVxrQC2cU.ipa)
 
 ---
 
@@ -96,10 +97,11 @@
 | **Unit & Integration Tests** | **PASSED (39/39)** | All cart persistence & auth guard suites passing |
 | **TypeScript Typecheck** | **PASSED (0 Errors)** | Strict compilation across all modules |
 | **iOS Manifest & Config** | **PASSED & VALIDATED** | Bundle ID `com.hinchmart`, buildNumber `29` |
-| **Native iOS Workspace** | **GENERATED & VERIFIED** | `ios/HINCHMART.xcodeproj` & `ios/HINCHMART/` |
+| **Native iOS Workspace** | **GENERATED & COMMITTED**| `ios/HINCHMART.xcodeproj` & `ios/HINCHMART/` |
 | **Metro iOS Bundler** | **PASSED (1,745 modules)** | 4.6 MB bundle + 38 asset variants |
 | **Apple Developer Team** | **AUTHENTICATED** | Team `7JCWL7V8T3` (`N Anjibabu Choudary`) |
 | **Apple Distribution Cert** | **CONFIGURED & ACTIVE** | Serial `43143BD409CEAA56A7C0F0979C4CC890` |
 | **Apple Provisioning Profile**| **CONFIGURED & ACTIVE** | ID `8G7W68KNU3` for `com.hinchmart` |
-| **EAS Production IPA Build** | **IN PROGRESS** | [EAS Build Console](https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/0192c11e-0043-48b1-9591-13e65baa823f) |
+| **Production IPA Build** | **PASSED & READY** | [Download .ipa](https://expo.dev/artifacts/eas/WO0ZobAOFUCh-qp31vF-T-LUOOJqJ9OZRHjVxrQC2cU.ipa) |
+
 
