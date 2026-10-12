@@ -35,9 +35,16 @@
 ### 2.3 Application Configuration Validation
 - **Command**: `npx expo config --type public`
 - **Status**: **PASSED**
-- **Verification**: Verified that `app.json` parses without schema errors. Validated `scheme: "hinchmart"`, `ios.bundleIdentifier: "com.hinch"`, `ios.buildNumber: "29"`, `ios.infoPlist` purpose strings, `ios.privacyManifests`, and confirmed all existing Android settings remain 100% intact.
+- **Verification**: Verified that `app.json` parses without schema errors. Validated `scheme: "hinchmart"`, `ios.bundleIdentifier: "com.hinchmart"`, `ios.buildNumber: "29"`, `ios.infoPlist` purpose strings, `ios.privacyManifests`, and confirmed all existing Android settings remain 100% intact.
 
-### 2.4 Native iOS Project Generation
+### 2.4 EAS Cloud Project Initialization
+- **Project**: `@anushabazaar2/hinchmart`
+- **EAS Project ID**: `6e6e7cdb-3152-4b81-8b96-f0cf293af28d`
+- **Dashboard URL**: `https://expo.dev/accounts/anushabazaar2/projects/hinchmart`
+- **Credentials URL**: `https://expo.dev/accounts/anushabazaar2/projects/hinchmart/credentials`
+- **Status**: Successfully linked and synchronized in `app.json`.
+
+### 2.5 Native iOS Project Generation
 - **Command**: `npx expo prebuild --platform ios --no-install`
 - **Status**: **PASSED (Exit Code 0)**
 - **Output Artifacts**:
@@ -50,7 +57,7 @@
   - `ios/HINCHMART/Images.xcassets` (AppIcon 1024x1024 & Splash assets)
   - `ios/HINCHMART/SplashScreen.storyboard` (Native launch screen)
 
-### 2.5 Metro Bundler iOS Export Compilation
+### 2.6 Metro Bundler iOS Export Compilation
 - **Command**: `npx expo export --platform ios --output-dir dist-ios-test --no-bytecode`
 - **Status**: **PASSED (Exit Code 0)**
 - **Metrics**:
