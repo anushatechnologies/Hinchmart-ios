@@ -1,0 +1,37 @@
+{
+  "java.import.gradle.enabled": false,
+  "java.import.gradle.wrapper.enabled": false,
+  "java.import.exclusions": [
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/.gradle/**",
+    "**/android/build/**",
+    "**/android/app/build/**",
+    "**/dist/**"
+  ],
+  "java.project.resourceFilters": [
+    "node_modules",
+    ".git",
+    ".gradle",
+    "build"
+  ],
+  "java.project.explorer.showNonJavaResources": false,
+  "gradle.autoDetect": "off",
+  "gradle.nestedProjects": false,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "**/android/build": true,
+    "**/android/app/build": true,
+    "**/.gradle": true
+  }
+}
