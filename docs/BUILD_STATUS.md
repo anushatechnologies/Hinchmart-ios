@@ -66,17 +66,40 @@
   - Generated output: `_expo/static/js/ios/index-*.js` (4.6 MB) + 38 asset variants
   - Compilation errors: **0**
 
+### 2.7 Apple Developer Account Authentication & Credentials Setup
+- **Apple ID**: `adakamahesh@gmail.com`
+- **Apple Developer Team**: `7JCWL7V8T3` (`N Anjibabu Choudary (Individual)`)
+- **Bundle Identifier**: `com.hinchmart`
+- **Capabilities Synced**: Push Notifications enabled (`aps-environment`)
+- **Distribution Certificate**:
+  - Serial Number: `43143BD409CEAA56A7C0F0979C4CC890`
+  - Status: Active (Expires May 5, 2027)
+- **Provisioning Profile**:
+  - Developer Portal ID: `8G7W68KNU3`
+  - Profile Type: Apple App Store Distribution
+  - Status: Active (Expires May 5, 2027)
+
+### 2.8 EAS Cloud iOS Production Build
+- **Command**: `npx eas-cli build --platform ios --profile production --non-interactive`
+- **Target Profile**: `production` (Release build, App Store distribution)
+- **Target Platform**: iOS (`.ipa`)
+- **Build ID**: `0192c11e-0043-48b1-9591-13e65baa823f`
+- **Live Build Dashboard**: `https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/0192c11e-0043-48b1-9591-13e65baa823f`
+- **Status**: **IN PROGRESS (Compiling on EAS macOS worker)**
+
 ---
 
 ## 3. Environment Boundaries & Verification Status Matrix
 
-| Check / Verification Step | Windows Environment (Current) | macOS / Xcode Environment (Required Next) |
+| Check / Verification Step | Status | Details / URL |
 | :--- | :--- | :--- |
-| **Unit & Integration Tests** | **PASSED (39/39)** | Can be re-run (`npm test`) |
-| **TypeScript Typecheck** | **PASSED (0 Errors)** | Can be re-run (`npx tsc`) |
-| **iOS Manifest & Config** | **PASSED & VALIDATED** | Read directly by Xcode |
-| **Native iOS Workspace** | **GENERATED & VERIFIED** | Consumed by Xcode / CocoaPods |
-| **Metro iOS Bundler** | **PASSED (1,745 modules)** | Served dynamically during dev |
-| **CocoaPods Resolution (`pod install`)** | Not supported on Windows | **Ready to run on Mac** (`cd ios && pod install`) |
-| **Xcode Compilation & Simulator** | Not supported on Windows | **Ready to run on Mac** (`npx expo run:ios`) |
-| **App Store Archive (`.ipa`)** | Not supported on Windows | **Ready via Xcode** or **EAS Build** |
+| **Unit & Integration Tests** | **PASSED (39/39)** | All cart persistence & auth guard suites passing |
+| **TypeScript Typecheck** | **PASSED (0 Errors)** | Strict compilation across all modules |
+| **iOS Manifest & Config** | **PASSED & VALIDATED** | Bundle ID `com.hinchmart`, buildNumber `29` |
+| **Native iOS Workspace** | **GENERATED & VERIFIED** | `ios/HINCHMART.xcodeproj` & `ios/HINCHMART/` |
+| **Metro iOS Bundler** | **PASSED (1,745 modules)** | 4.6 MB bundle + 38 asset variants |
+| **Apple Developer Team** | **AUTHENTICATED** | Team `7JCWL7V8T3` (`N Anjibabu Choudary`) |
+| **Apple Distribution Cert** | **CONFIGURED & ACTIVE** | Serial `43143BD409CEAA56A7C0F0979C4CC890` |
+| **Apple Provisioning Profile**| **CONFIGURED & ACTIVE** | ID `8G7W68KNU3` for `com.hinchmart` |
+| **EAS Production IPA Build** | **IN PROGRESS** | [EAS Build Console](https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/0192c11e-0043-48b1-9591-13e65baa823f) |
+
