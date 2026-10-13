@@ -479,4 +479,73 @@ export const productsApi = {
       imageUrl: finalImageUrl,
     };
   },
+
+  /**
+   * GET related products based on subcategory, category, and brand
+   */
+  getRelatedProducts: async (params: {
+    id?: string | number;
+    productId?: string | number;
+    subcategoryId?: string | number;
+    categoryId?: string | number;
+    brand?: string;
+    brandId?: string | number;
+  }): Promise<ApiProduct[]> => {
+    try {
+      const currentId = String(params.id || params.productId || '');
+      const subId = params.subcategoryId;
+      const catId = params.categoryId;
+      const brand = params.brand;
+
+      const related: ApiProduct[] = [];
+      const seenIds = new Set<string>();
+      if (currentId) seenIds.add(currentId);
+
+      // 1. Fetch by subcategoryId (most relevant)
+      if (subId && String(subId) !== 'all' && String(subId) !== 'null' && String(subId) !== 'undefined') {
+        const bySub = await productsApi.getProducts({ subcategoryId: subId });
+        for (const p of bySub) {
+          const pid = String(p.id || p.productId);
+          if (!seenIds.has(pid)) {
+            seenIds.add(pid);
+            related.push(p);
+          }
+        }
+      }
+
+      // 2. If fewer than 6, supplement from the same category
+      if (related.length < 6 && catId && String(catId) !== 'all' && String(catId) !== 'null' && String(catId) !== 'undefined') {
+        const byCat = await productsApi.getProducts({ categoryId: catId });
+        for (const p of byCat) {
+          const pid = String(p.id || p.productId);
+          if (!seenIds.has(pid)) {
+            seenIds.add(pid);
+            related.push(p);
+          }
+          if (related.length >= 10) break;
+        }
+      }
+
+      // 3. If still fewer than 4, supplement by same brand
+      if (related.length < 4 && brand && brand.trim().length > 0) {
+        const byBrand = await productsApi.getProducts({ brand });
+        for (const p of byBrand) {
+          const pid = String(p.id || p.productId);
+          if (!seenIds.has(pid)) {
+            seenIds.add(pid);
+            related.push(p);
+          }
+          if (related.length >= 10) break;
+        }
+      }
+
+      return related;
+    } catch (err) {
+      if (__DEV__) {
+        console.log('[productsApi] getRelatedProducts error:', err);
+      }
+      return [];
+    }
+  },
 };
+
