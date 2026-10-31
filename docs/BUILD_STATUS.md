@@ -83,10 +83,11 @@
 - **Command**: `npx eas-cli build --platform ios --profile production --non-interactive`
 - **Target Profile**: `production` (Release build, App Store distribution)
 - **Target Platform**: iOS (`.ipa`)
-- **Build ID**: `a3ce654d-d0b7-40ce-bccb-ecbff5cb9968`
-- **Live Build Dashboard**: `https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/a3ce654d-d0b7-40ce-bccb-ecbff5cb9968`
-- **Status**: **PASSED & FINISHED (100% SUCCESS)**
-- **Production IPA Download URL**: [Download Production IPA (WO0ZobAOFUCh-qp31vF-T-LUOOJqJ9OZRHjVxrQC2cU.ipa)](https://expo.dev/artifacts/eas/WO0ZobAOFUCh-qp31vF-T-LUOOJqJ9OZRHjVxrQC2cU.ipa)
+- **Build Number**: `31` (Version: `1.0.28`)
+- **Build ID**: `d4c6c760-be8e-4cad-b065-d3e8af0257ed`
+- **Live Build Dashboard**: [https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/d4c6c760-be8e-4cad-b065-d3e8af0257ed](https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/d4c6c760-be8e-4cad-b065-d3e8af0257ed)
+- **Status**: **IN PROGRESS (Building .ipa on remote macOS runner)**
+- **Previous Production IPA Download URL**: [Download Production IPA v30 (T-Kl0NOofomOR0dmX8uAHwG2gurK-OGLlhchPwW7Uok.ipa)](https://expo.dev/artifacts/eas/T-Kl0NOofomOR0dmX8uAHwG2gurK-OGLlhchPwW7Uok.ipa)
 
 ### 2.9 App Store Connect & TestFlight Submission
 - **Command**: `npx eas-cli submit --platform ios --id a3ce654d-d0b7-40ce-bccb-ecbff5cb9968`
