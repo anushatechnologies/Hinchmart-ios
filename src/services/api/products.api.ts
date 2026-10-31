@@ -119,28 +119,45 @@ export function normalizeApiProduct(raw: any, index = 0): ApiProduct {
   const parsedReviews = typeof raw.reviews === 'number' ? raw.reviews : (typeof raw.reviewCount === 'number' ? raw.reviewCount : parseInt(String(raw.reviews ?? raw.reviewCount ?? 0), 10));
   const validReviews = !isNaN(parsedReviews) && parsedReviews > 0 ? parsedReviews : 0;
 
+  const finalSellingPrice = typeof raw.sellingPrice === 'number'
+    ? raw.sellingPrice
+    : price;
+
+  const inStock = raw.inStock !== undefined
+    ? Boolean(raw.inStock)
+    : (stockQty > 0);
+
+  const availableQty = typeof raw.availableQty === 'number'
+    ? raw.availableQty
+    : stockQty;
+
   return {
     ...raw,
     id: String(prodId),
     productId: String(prodId),
     name: raw.title || raw.name || raw.productName || '',
     title: raw.title || raw.name || raw.productName || '',
+    slug: raw.slug || '',
+    sku: raw.sku || '',
     description: raw.description || raw.desc || '',
     categoryId: String(raw.categoryId || raw.category_id || raw.category?.id || ''),
     subcategoryId: String(raw.subcategoryId || raw.subcategory_id || raw.subCategory?.id || ''),
     brandId: raw.brandId,
     brandName: raw.brandName || raw.brand || raw.brand_name || '',
     brand: raw.brandName || raw.brand || raw.brand_name || '',
-    price,
-    basePrice: typeof raw.basePrice === 'number' ? raw.basePrice : comparePrice,
-    discountedPrice: price,
+    price: finalSellingPrice,
+    sellingPrice: finalSellingPrice,
+    basePrice: typeof raw.basePrice === 'number' ? raw.basePrice : (typeof raw.price === 'number' ? raw.price : comparePrice),
+    discountedPrice: finalSellingPrice,
     mrp: raw.mrp ?? comparePrice,
     comparePrice,
     discountPercent,
+    discountPercentage: discountPercent,
     moq,
     unit,
     weightKg: typeof raw.weightKg === 'number' ? raw.weightKg : parseFloat(String(raw.weightKg || 0)) || undefined,
     gstRate: typeof raw.gstRate === 'number' ? raw.gstRate : parseFloat(String(raw.gstRate || 0)) || 18,
+    hsnCode: raw.hsnCode || raw.hsn || '',
     rating: validRating,
     reviews: validReviews,
     reviewCount: validReviews,
@@ -149,6 +166,8 @@ export function normalizeApiProduct(raw: any, index = 0): ApiProduct {
     images: finalImages,
     imageUrls: finalImages,
     stockQty,
+    availableQty,
+    inStock,
     is24HourDelivery: Boolean(raw.is24HourDelivery || raw.deliveryType === '24_HOURS'),
     verified: raw.verified ?? true,
     active: raw.isActive !== false && raw.active !== false && raw.status !== 'INACTIVE',

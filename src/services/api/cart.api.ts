@@ -206,13 +206,40 @@ export const cartApi = {
   },
 
   /**
-   * POST /api/cart/switch-store — Switch active store
+   * POST /api/cart/switch-store — Switch active dark store
+   * Supports: { storeId, storeSlug, pendingProductId, pendingQuantity }
    */
-  switchStore: async (storeId: number | string): Promise<any> => {
-    const payload = {
-      storeId: Number(storeId) || storeId,
-      targetStoreId: Number(storeId) || storeId,
-    };
+  switchStore: async (
+    storeIdOrPayload: number | string | {
+      storeId: number | string;
+      storeSlug?: string;
+      pendingProductId?: number | string;
+      pendingQuantity?: number;
+    },
+    extraOptions?: {
+      storeSlug?: string;
+      pendingProductId?: number | string;
+      pendingQuantity?: number;
+    }
+  ): Promise<any> => {
+    let payload: Record<string, any>;
+    if (typeof storeIdOrPayload === 'object' && storeIdOrPayload !== null) {
+      payload = {
+        storeId: Number(storeIdOrPayload.storeId) || storeIdOrPayload.storeId,
+        targetStoreId: Number(storeIdOrPayload.storeId) || storeIdOrPayload.storeId,
+        ...(storeIdOrPayload.storeSlug ? { storeSlug: storeIdOrPayload.storeSlug } : {}),
+        ...(storeIdOrPayload.pendingProductId !== undefined ? { pendingProductId: Number(storeIdOrPayload.pendingProductId) || storeIdOrPayload.pendingProductId } : {}),
+        ...(storeIdOrPayload.pendingQuantity !== undefined ? { pendingQuantity: Number(storeIdOrPayload.pendingQuantity) || 1 } : {}),
+      };
+    } else {
+      payload = {
+        storeId: Number(storeIdOrPayload) || storeIdOrPayload,
+        targetStoreId: Number(storeIdOrPayload) || storeIdOrPayload,
+        ...(extraOptions?.storeSlug ? { storeSlug: extraOptions.storeSlug } : {}),
+        ...(extraOptions?.pendingProductId !== undefined ? { pendingProductId: Number(extraOptions.pendingProductId) || extraOptions.pendingProductId } : {}),
+        ...(extraOptions?.pendingQuantity !== undefined ? { pendingQuantity: Number(extraOptions.pendingQuantity) || 1 } : {}),
+      };
+    }
     try {
       const response = await apiClient.post(API_ENDPOINTS.CART.SWITCH_STORE, payload);
       return unwrapApiResponse<any>(response);

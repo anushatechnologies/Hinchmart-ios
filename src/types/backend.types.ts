@@ -137,6 +137,14 @@ export interface CheckoutPreviewResponse {
   freightCharge: number;
   craneUnloadingCharge: number;
   grandTotal: number;
+  items?: Array<{
+    productId: number | string;
+    title: string;
+    quantity: number;
+    lineTotal: number;
+  }>;
+  canPlaceOrder?: boolean;
+  orderBlockReason?: string | null;
 }
 
 // ── 5. Orders & Invoices (/api/orders) ──────────────────────────────────────
@@ -281,7 +289,10 @@ export interface ProductReviewSummary {
   productId: number | string;
   averageRating: number;
   totalReviews: number;
-  ratingDistribution: {
+  ratingBreakdown?: {
+    [star: string]: number;
+  };
+  ratingDistribution?: {
     [star: string]: number;
   };
 }
@@ -305,12 +316,15 @@ export interface ApiWalletInfo {
 export interface ApiWalletTransaction {
   id?: string | number;
   transactionId?: number | string;
-  type: 'CREDIT' | 'DEBIT' | 'CASHBACK' | 'REFUND';
+  type: 'CREDIT' | 'DEBIT' | 'CASHBACK' | 'REFUND' | string;
   amount: number;
-  description: string;
+  source?: string;
   referenceId?: string;
+  description: string;
+  balanceAfter?: number;
   status?: string;
-  createdAt: string;
+  createdAt?: string;
+  timestamp?: string;
 }
 
 export interface ApiWalletReward {

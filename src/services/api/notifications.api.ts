@@ -42,4 +42,27 @@ export const notificationsApi = {
       await apiClient.post(API_ENDPOINTS.NOTIFICATIONS.MARK_ALL_READ);
     } catch {}
   },
+
+  /**
+   * POST /api/notifications/push-token — Register FCM/APNs push device token
+   */
+  registerPushToken: async (
+    token: string,
+    platform: 'ios' | 'android' | string = 'ios'
+  ): Promise<any> => {
+    try {
+      const response = await apiClient.post(API_ENDPOINTS.NOTIFICATIONS.PUSH_TOKEN, {
+        token,
+        deviceToken: token,
+        fcmToken: token,
+        platform,
+      });
+      return response.data;
+    } catch (err: any) {
+      if (__DEV__) {
+        console.log('[notificationsApi.registerPushToken] Notice:', err?.message || err);
+      }
+      return null;
+    }
+  },
 };

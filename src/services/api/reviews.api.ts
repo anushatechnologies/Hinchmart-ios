@@ -165,10 +165,23 @@ export const reviewsApi = {
    */
   getProductReviewSummary: async (
     productId: string | number
-  ): Promise<{ productId: number | string; averageRating: number; totalReviews: number; ratingDistribution: Record<string, number> }> => {
+  ): Promise<{
+    productId: number | string;
+    averageRating: number;
+    totalReviews: number;
+    ratingBreakdown: Record<string, number>;
+    ratingDistribution: Record<string, number>;
+  }> => {
     const response = await apiClient.get(API_ENDPOINTS.REVIEWS.PRODUCT_SUMMARY(productId));
-    const data = (response.data as any)?.data || response.data;
-    return data;
+    const data = (response.data as any)?.data || response.data || {};
+    const breakdown = data.ratingBreakdown || data.ratingDistribution || {};
+    return {
+      productId: data.productId || productId,
+      averageRating: Number(data.averageRating) || 0,
+      totalReviews: Number(data.totalReviews) || 0,
+      ratingBreakdown: breakdown,
+      ratingDistribution: breakdown,
+    };
   },
 
   /**

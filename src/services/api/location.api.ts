@@ -128,13 +128,13 @@ export const locationApi = {
       let response;
       try {
         response = await apiClient.get<PincodeServiceabilityResponse>(
-          API_ENDPOINTS.LOCATION.SERVICEABILITY,
+          API_ENDPOINTS.SERVICEABILITY.CHECK || '/api/serviceability/check',
           { params: cleanPin ? { pincode: cleanPin } : {} }
         );
       } catch {
-        // Fallback to dedicated ServiceabilityController
+        // Fallback to location serviceability check
         response = await apiClient.get<PincodeServiceabilityResponse>(
-          API_ENDPOINTS.SERVICEABILITY.CHECK,
+          API_ENDPOINTS.LOCATION.SERVICEABILITY,
           { params: cleanPin ? { pincode: cleanPin } : {} }
         );
       }

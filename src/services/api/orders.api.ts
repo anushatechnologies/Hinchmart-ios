@@ -143,7 +143,7 @@ export const ordersApi = {
   },
 
   /**
-   * GET /api/customer/orders (or /api/orders) — Fetch list of live orders
+   * GET /api/orders (or /api/customer/orders) — Fetch list of live orders
    */
   getOrders: async (params?: { page?: number; limit?: number; status?: string }): Promise<Order[]> => {
     try {
@@ -169,7 +169,7 @@ export const ordersApi = {
   },
 
   /**
-   * GET /api/customer/orders/{id} (or /api/orders/{id}) — Fetch single order details
+   * GET /api/orders/{id} (or /api/customer/orders/{id}) — Fetch single order details
    */
   getOrderDetail: async (id: string | number): Promise<Order> => {
     const cleanId = String(id).replace(/^#/, '');

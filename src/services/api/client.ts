@@ -261,7 +261,10 @@ apiClient.interceptors.response.use(
             try {
               const refreshResponse = await axios.post(
                 `${API_BASE_URL}/api/auth/refresh-token`,
-                { refreshToken: storedRefreshToken },
+                {
+                  token: storedRefreshToken || storedToken,
+                  refreshToken: storedRefreshToken,
+                },
                 {
                   headers: {
                     'Content-Type': 'application/json',

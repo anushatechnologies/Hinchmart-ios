@@ -14,7 +14,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.hinchmart",
-      "buildNumber": "30",
+      "buildNumber": "31",
       "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,

@@ -130,6 +130,7 @@ export const authApi = {
   refreshToken: async (tokenOrRefresh?: string): Promise<any> => {
     const body: Record<string, any> = {};
     if (tokenOrRefresh) {
+      body.token = tokenOrRefresh;
       body.refreshToken = tokenOrRefresh;
     }
     const response = await apiClient.post(API_ENDPOINTS.AUTH.REFRESH, body);

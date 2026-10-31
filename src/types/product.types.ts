@@ -43,12 +43,21 @@ export interface ApiProduct {
   id?: string | number;
   name?: string;
   image?: string;
+  imageUrls?: string[];
   rating?: number;
   reviews?: number;
   discountPercent?: number;
+  discountPercentage?: number;
   savingsText?: string;
   comparePrice?: number;
+  sellingPrice?: number;
+  discountedPrice?: number;
+  basePrice?: number;
+  availableQty?: number;
+  inStock?: boolean;
+  weightKg?: number;
   verified?: boolean;
+  isActive?: boolean;
 }
 
 export interface ProductImageUploadResponse {

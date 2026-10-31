@@ -48,6 +48,7 @@ export function normalizeApiCategory(raw: any, index = 0): ApiCategory {
     '';
   const resolvedImg = normalizeCategoryImageUrl(rawImg);
 
+  const rawSubcategories = raw.subcategories || raw.subCategories || [];
   return {
     ...raw,
     id: String(catId),
@@ -60,18 +61,35 @@ export function normalizeApiCategory(raw: any, index = 0): ApiCategory {
     iconName: raw.iconName || raw.icon || 'shape-outline',
     color: raw.color || '#E31E24',
     gradient: raw.gradient || ['#E31E24', '#991B1B'],
-    productCount: raw.productCount || (raw.subCategories ? `${raw.subCategories.length} Subcategories` : undefined),
-    subCategories: raw.subCategories,
+    productCount: raw.productCount || (rawSubcategories.length ? `${rawSubcategories.length} Subcategories` : undefined),
+    subCategories: rawSubcategories,
+    subcategories: rawSubcategories,
   };
 }
 
 export const categoriesApi = {
   /**
-   * GET /api/categories — Retrieve all categories from live backend
+   * GET /api/categories/website?includeSubcategories=true&page=1 — Master Taxonomy Categories
+   * Fallback: GET /api/categories
    */
-  getCategories: async (): Promise<ApiCategory[]> => {
+  getCategories: async (params?: { includeSubcategories?: boolean; page?: number }): Promise<ApiCategory[]> => {
     try {
-      const response = await apiClient.get(API_ENDPOINTS.CATEGORIES.LIST);
+      let response;
+      try {
+        response = await apiClient.get(
+          API_ENDPOINTS.CATEGORIES.WEBSITE || '/api/categories/website',
+          {
+            params: {
+              includeSubcategories: params?.includeSubcategories ?? true,
+              page: params?.page ?? 1,
+            },
+          }
+        );
+      } catch (websiteErr) {
+        // Fallback to standard /api/categories
+        response = await apiClient.get(API_ENDPOINTS.CATEGORIES.LIST);
+      }
+
       const rawList = extractCategoriesArray(response.data);
       return rawList.map((c, idx) => normalizeApiCategory(c, idx));
     } catch (err: any) {

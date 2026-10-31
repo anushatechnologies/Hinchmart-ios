@@ -22,42 +22,49 @@ export interface NormalizedHotDealProduct extends HotDealProduct {
  * while preserving all original backend attributes.
  */
 export function normalizeHotDealProduct(raw: any, index = 0): NormalizedHotDealProduct {
-  const pId = raw.productId || raw.id || raw.product_id || index + 1;
-  const name = raw.productName || raw.name || raw.title || '';
-  const price = typeof raw.price === 'number' ? raw.price : parseFloat(String(raw.price || 0)) || 0;
-  const mrp = typeof raw.mrp === 'number' ? raw.mrp : typeof raw.comparePrice === 'number' ? raw.comparePrice : undefined;
+  const merged = raw.product ? { ...raw.product, ...raw } : raw;
+  const pId = merged.productId || merged.id || merged.product_id || raw.productId || raw.id || index + 1;
+  const name = merged.title || merged.productName || merged.name || raw.productName || raw.title || '';
+  const price = typeof merged.sellingPrice === 'number'
+    ? merged.sellingPrice
+    : typeof merged.price === 'number'
+    ? merged.price
+    : parseFloat(String(merged.sellingPrice || merged.price || 0)) || 0;
+  const mrp = typeof merged.mrp === 'number' ? merged.mrp : typeof merged.comparePrice === 'number' ? merged.comparePrice : undefined;
 
   let discountPercent =
-    typeof raw.discountPercent === 'number'
-      ? raw.discountPercent
-      : typeof raw.discountPercentage === 'number'
-      ? raw.discountPercentage
-      : typeof raw.discount === 'number'
-      ? raw.discount
+    typeof merged.discountPercentage === 'number'
+      ? merged.discountPercentage
+      : typeof merged.discountPercent === 'number'
+      ? merged.discountPercent
+      : typeof merged.discount === 'number'
+      ? merged.discount
       : 0;
 
   if (!discountPercent && mrp && price && mrp > price) {
     discountPercent = Math.round(((mrp - price) / mrp) * 100);
   }
 
-  const rawImg = raw.imageUrl || raw.image || (Array.isArray(raw.images) && raw.images[0]) || '';
+  const rawImg = merged.imageUrl || merged.image || (Array.isArray(merged.images) && merged.images[0]) || '';
   const imgUrl = normalizeProductImageUrl(typeof rawImg === 'string' ? rawImg : rawImg?.url || '');
 
   return {
-    ...raw,
+    ...merged,
     id: String(pId),
     productId: pId,
     name,
     productName: name,
     title: name,
     price,
+    sellingPrice: price,
     mrp,
     comparePrice: mrp,
     discountPercent,
+    discountPercentage: discountPercent,
     imageUrl: imgUrl,
     image: imgUrl,
-    displayOrder: typeof raw.displayOrder === 'number' ? raw.displayOrder : index,
-    active: raw.active !== false,
+    displayOrder: typeof merged.displayOrder === 'number' ? merged.displayOrder : typeof raw.displayOrder === 'number' ? raw.displayOrder : index,
+    active: merged.active !== false && raw.active !== false,
   };
 }
 
@@ -115,11 +122,15 @@ export const hotDealsApi = {
       }
     }
 
-    // Extract products array from response envelope
+    // Extract products/deals array from response envelope
     let list: any[] = [];
     if (rawData) {
       if (Array.isArray(rawData)) {
         list = rawData;
+      } else if (Array.isArray(rawData.deals)) {
+        list = rawData.deals;
+      } else if (rawData.data && Array.isArray(rawData.data.deals)) {
+        list = rawData.data.deals;
       } else if (Array.isArray(rawData.products)) {
         list = rawData.products;
       } else if (rawData.data && Array.isArray(rawData.data.products)) {
