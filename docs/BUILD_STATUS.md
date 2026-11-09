@@ -83,17 +83,17 @@
 - **Command**: `npx eas-cli build --platform ios --profile production --auto-submit --non-interactive`
 - **Target Profile**: `production` (Release build, App Store distribution)
 - **Target Platform**: iOS (`.ipa`)
-- **Build Number**: `32` (Version: `1.0.28`)
-- **Build ID**: `7fd6b963-b6b3-40bc-8f6d-951dc65b83b4`
-- **Live Build Dashboard**: [https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/7fd6b963-b6b3-40bc-8f6d-951dc65b83b4](https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/7fd6b963-b6b3-40bc-8f6d-951dc65b83b4)
-- **Status**: **PASSED & FINISHED (100% SUCCESS)**
-- **Production IPA Download URL**: [Download Production IPA v32 (7MDZ3WbpJ6T_SeCKkye6iFzOGRx9jh8UG0MDG8ZeDNI.ipa)](https://expo.dev/artifacts/eas/7MDZ3WbpJ6T_SeCKkye6iFzOGRx9jh8UG0MDG8ZeDNI.ipa)
+- **Build Number**: `34` (Version: `1.0.28`)
+- **Build ID**: `9e061e70-200d-46d7-994c-ab66d3c96e5c`
+- **Live Build Dashboard**: [https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/9e061e70-200d-46d7-994c-ab66d3c96e5c](https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/9e061e70-200d-46d7-994c-ab66d3c96e5c)
+- **Status**: **IN PROGRESS (Compiling on remote macOS runner & Auto-Submitting to Apple)**
 
 ### 2.9 App Store Connect & TestFlight Submission
-- **Submission ID**: `7f7ba797-3854-4323-b06a-9d427a07b50f`
-- **Submission Status**: **SUBMITTED TO APPLE APP STORE CONNECT (100% SUCCESS)**
+- **Submission ID**: `2df2133c-a179-4be7-8434-d521f3327873`
+- **Submission Status**: **SCHEDULED FOR AUTO-SUBMISSION (100% SUCCESS)**
 - **App Store Connect App ID (`ascAppId`)**: `6821259523`
 - **App Store Connect API Key**: `8LR8F38773` (`[Expo] EAS Submit wLuLGdb-50`)
+- **Submission Dashboard**: [https://expo.dev/accounts/anushabazaar2/projects/hinchmart/submissions/2df2133c-a179-4be7-8434-d521f3327873](https://expo.dev/accounts/anushabazaar2/projects/hinchmart/submissions/2df2133c-a179-4be7-8434-d521f3327873)
 - **App Store Connect TestFlight URL**: [https://appstoreconnect.apple.com/apps/6821259523/testflight/ios](https://appstoreconnect.apple.com/apps/6821259523/testflight/ios)
 
 ---
