@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { useTheme } from '../../theme';
 import { ProductCard } from '../cards/ProductCard';
+import { isTablet } from '../../utils/responsive';
 
 export interface ProductGridProps<T = any> extends Partial<FlatListProps<T>> {
   data: T[];
@@ -39,12 +40,15 @@ export function ProductGrid<T = any>({
   ...rest
 }: ProductGridProps<T>) {
   const { theme } = useTheme();
+  const tablet = isTablet();
+  const numColumns = tablet ? 3 : 2;
 
   return (
     <FlatList
+      key={`grid-cols-${numColumns}`}
       data={data}
       keyExtractor={(item: any, index) => String(item?.id || item?.productId || index)}
-      numColumns={2}
+      numColumns={numColumns}
       columnWrapperStyle={data && data.length > 0 ? styles.columnWrapper : undefined}
       contentContainerStyle={[styles.contentContainer, contentContainerStyle]}
       showsVerticalScrollIndicator={false}
@@ -66,7 +70,7 @@ export function ProductGrid<T = any>({
           product={item}
           onPress={() => onProductPress(item)}
           variant="grid"
-          style={styles.cardItem}
+          style={tablet ? styles.cardItemTablet : styles.cardItem}
         />
       )}
       style={[styles.list, style]}
@@ -92,5 +96,8 @@ const styles = StyleSheet.create({
   },
   cardItem: {
     width: '48.5%',
+  },
+  cardItemTablet: {
+    width: '31.5%',
   },
 });

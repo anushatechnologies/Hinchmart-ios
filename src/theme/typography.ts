@@ -6,8 +6,10 @@ import { Platform, PixelRatio, Dimensions } from 'react-native';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-// Base scale factor for responsive fonts
-const scale = SCREEN_WIDTH / 375; // iPhone 12/13/14 base
+// Base scale factor for responsive fonts, capped for iPad / Tablets to prevent font overflow
+const rawScale = SCREEN_WIDTH / 375; // iPhone 12/13/14 base
+const isPad = Platform.OS === 'ios' && (Platform.isPad ?? false);
+const scale = isPad ? Math.min(rawScale, 1.25) : Math.min(rawScale, 1.35);
 
 export function responsiveFontSize(size: number): number {
   const newSize = size * scale;

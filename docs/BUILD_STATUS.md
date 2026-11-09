@@ -80,22 +80,20 @@
   - Status: Active (Expires May 5, 2027)
 
 ### 2.8 EAS Cloud iOS Production Build
-- **Command**: `npx eas-cli build --platform ios --profile production --non-interactive`
+- **Command**: `npx eas-cli build --platform ios --profile production --auto-submit --non-interactive`
 - **Target Profile**: `production` (Release build, App Store distribution)
 - **Target Platform**: iOS (`.ipa`)
-- **Build Number**: `31` (Version: `1.0.28`)
-- **Build ID**: `d4c6c760-be8e-4cad-b065-d3e8af0257ed`
-- **Live Build Dashboard**: [https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/d4c6c760-be8e-4cad-b065-d3e8af0257ed](https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/d4c6c760-be8e-4cad-b065-d3e8af0257ed)
-- **Status**: **IN PROGRESS (Building .ipa on remote macOS runner)**
-- **Previous Production IPA Download URL**: [Download Production IPA v30 (T-Kl0NOofomOR0dmX8uAHwG2gurK-OGLlhchPwW7Uok.ipa)](https://expo.dev/artifacts/eas/T-Kl0NOofomOR0dmX8uAHwG2gurK-OGLlhchPwW7Uok.ipa)
+- **Build Number**: `32` (Version: `1.0.28`)
+- **Build ID**: `7fd6b963-b6b3-40bc-8f6d-951dc65b83b4`
+- **Live Build Dashboard**: [https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/7fd6b963-b6b3-40bc-8f6d-951dc65b83b4](https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/7fd6b963-b6b3-40bc-8f6d-951dc65b83b4)
+- **Status**: **PASSED & FINISHED (100% SUCCESS)**
+- **Production IPA Download URL**: [Download Production IPA v32 (7MDZ3WbpJ6T_SeCKkye6iFzOGRx9jh8UG0MDG8ZeDNI.ipa)](https://expo.dev/artifacts/eas/7MDZ3WbpJ6T_SeCKkye6iFzOGRx9jh8UG0MDG8ZeDNI.ipa)
 
 ### 2.9 App Store Connect & TestFlight Submission
-- **Command**: `npx eas-cli submit --platform ios --id a3ce654d-d0b7-40ce-bccb-ecbff5cb9968`
-- **Status**: **SUBMITTED & UPLOADED (100% SUCCESS)**
+- **Submission ID**: `7f7ba797-3854-4323-b06a-9d427a07b50f`
+- **Submission Status**: **SUBMITTED TO APPLE APP STORE CONNECT (100% SUCCESS)**
 - **App Store Connect App ID (`ascAppId`)**: `6821259523`
 - **App Store Connect API Key**: `8LR8F38773` (`[Expo] EAS Submit wLuLGdb-50`)
-- **TestFlight Internal Group**: `Team (Expo)`
-- **TestFlight Access Enabled For**: `adakamahesh@gmail.com`
 - **App Store Connect TestFlight URL**: [https://appstoreconnect.apple.com/apps/6821259523/testflight/ios](https://appstoreconnect.apple.com/apps/6821259523/testflight/ios)
 
 ---

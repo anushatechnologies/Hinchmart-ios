@@ -7,8 +7,8 @@
 import { Platform } from 'react-native';
 
 /** Application bundle / package identifiers */
-export const APP_PACKAGE_NAME = 'com.hinch';
-export const IOS_APP_STORE_ID = '6766501000';
+export const APP_PACKAGE_NAME = 'com.hinchmart';
+export const IOS_APP_STORE_ID = '6821259523';
 
 /** Official Google Play Store URLs */
 export const PLAY_STORE_MARKET_URI = `market://details?id=${APP_PACKAGE_NAME}`;

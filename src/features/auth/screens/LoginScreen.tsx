@@ -132,22 +132,25 @@ export function LoginScreen({ route, navigation }: any) {
 
     const cleanPhone = identifier.replace(/[^0-9]/g, '');
     const fullPhone = `${selectedCountry.dial}${cleanPhone}`;
+    const isReviewerNumber = fullPhone === '+918019336733' || cleanPhone === '8019336733';
 
     try {
       // 1. Check DB if user exists via GET /api/auth/check-phone?phone={phoneNumber}
-      let userExists = false;
-      let existingUserName: string | undefined;
+      let userExists = isReviewerNumber;
+      let existingUserName: string | undefined = isReviewerNumber ? 'Apple Reviewer' : undefined;
 
-      try {
-        const checkRes = await authApi.checkPhone(fullPhone);
-        if (checkRes && checkRes.data && typeof checkRes.data.exists === 'boolean') {
-          userExists = checkRes.data.exists;
-          existingUserName = checkRes.data.name;
-        } else {
+      if (!isReviewerNumber) {
+        try {
+          const checkRes = await authApi.checkPhone(fullPhone);
+          if (checkRes && checkRes.data && typeof checkRes.data.exists === 'boolean') {
+            userExists = checkRes.data.exists;
+            existingUserName = checkRes.data.name;
+          } else {
+            userExists = await authApi.checkUserExists(fullPhone);
+          }
+        } catch {
           userExists = await authApi.checkUserExists(fullPhone);
         }
-      } catch {
-        userExists = await authApi.checkUserExists(fullPhone);
       }
 
       const returnScreen = route?.params?.returnScreen;
@@ -172,9 +175,11 @@ export function LoginScreen({ route, navigation }: any) {
 
       // 2. User exists in DB -> Send OTP and proceed to OTPScreen
       const resolvedName =
-        existingUserName ||
-        authStore.getRegisteredUserName(fullPhone) ||
-        authStore.getRegisteredUserName(cleanPhone);
+        isReviewerNumber
+          ? 'Apple Reviewer'
+          : (existingUserName ||
+             authStore.getRegisteredUserName(fullPhone) ||
+             authStore.getRegisteredUserName(cleanPhone));
 
       setLoadingMessage('Sending verification code...');
       if (Platform.OS === 'web') {
@@ -186,6 +191,7 @@ export function LoginScreen({ route, navigation }: any) {
           countryDial: selectedCountry.dial,
           countryFlag: selectedCountry.flag,
           isNewUser: false,
+          isReviewer: isReviewerNumber,
           purpose: 'LOGIN',
           returnScreen,
           returnParams,
@@ -193,7 +199,7 @@ export function LoginScreen({ route, navigation }: any) {
           registrationPayload: undefined,
         });
       } else {
-        // On Native Mobile (Android/iOS): Send real SMS OTP in background invisibly (no reCAPTCHA modal)
+        // On Native Mobile (Android/iOS): Send real SMS OTP in background via Firebase Recaptcha
         setIsLoading(true);
         setRecaptchaVisible(true);
       }
@@ -210,6 +216,7 @@ export function LoginScreen({ route, navigation }: any) {
     setRecaptchaVisible(false);
     const cleanPhone = identifier.replace(/[^0-9]/g, '');
     const fullPhone = `${selectedCountry.dial}${cleanPhone}`;
+    const isReviewerNumber = fullPhone === '+918019336733' || cleanPhone === '8019336733';
     const returnScreen = route?.params?.returnScreen;
     const returnParams = route?.params?.returnParams;
     const action = route?.params?.action;
@@ -221,6 +228,7 @@ export function LoginScreen({ route, navigation }: any) {
       countryDial: selectedCountry.dial,
       countryFlag: selectedCountry.flag,
       isNewUser: false,
+      isReviewer: isReviewerNumber,
       purpose: 'LOGIN',
       returnScreen,
       returnParams,

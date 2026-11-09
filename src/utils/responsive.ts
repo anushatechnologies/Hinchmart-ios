@@ -36,6 +36,11 @@ export function moderateScale(size: number, factor = 0.5): number {
 export type DeviceType = 'phone' | 'largePhone' | 'foldable' | 'tablet';
 
 export function getDeviceType(): DeviceType {
+  // Direct iOS tablet detection (iPad Air 11-inch, iPad Pro, iPad mini, etc.)
+  if (Platform.OS === 'ios' && Platform.isPad) {
+    return 'tablet';
+  }
+
   const pixelDensity = PixelRatio.get();
   const adjustedWidth = SCREEN_WIDTH * pixelDensity;
   const adjustedHeight = SCREEN_HEIGHT * pixelDensity;
@@ -49,10 +54,31 @@ export function getDeviceType(): DeviceType {
 }
 
 /**
- * Check if device is tablet
+ * Check if device is tablet (iPad Air 11-inch, iPad, or Android tablet)
  */
 export function isTablet(): boolean {
+  if (Platform.OS === 'ios' && Platform.isPad) {
+    return true;
+  }
   return getDeviceType() === 'tablet';
+}
+
+/**
+ * Check if current device is specifically an iPad
+ */
+export function isIPad(): boolean {
+  return Platform.OS === 'ios' && Platform.isPad;
+}
+
+/**
+ * Tablet-safe scaling helper to prevent elements or fonts from overflowing on iPads
+ */
+export function tabletScale(size: number, maxScale = 1.35): number {
+  if (isTablet()) {
+    const scale = SCREEN_WIDTH / guidelineBaseWidth;
+    return size * Math.min(scale, maxScale);
+  }
+  return horizontalScale(size);
 }
 
 /**

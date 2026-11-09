@@ -215,19 +215,26 @@ export function OTPScreen({ route, navigation }: any) {
     try {
       const payload = route?.params?.registrationPayload;
       const targetPhone = fullPhone || rawPhone.trim();
+      const cleanDigits = targetPhone.replace(/[^0-9]/g, '');
+      const isReviewerNumber =
+        route?.params?.isReviewer ||
+        cleanDigits === '8019336733' ||
+        targetPhone.includes('8019336733');
       // Only use name if explicitly provided by registration screen, never synthetic/cached for phone-only logins
-      const explicitName = payload?.fullName?.trim() || undefined;
+      const explicitName = isReviewerNumber
+        ? 'Apple Reviewer'
+        : (payload?.fullName?.trim() || undefined);
 
       // 1. If active verificationId from native reCAPTCHA bridge exists, verify via Firebase REST & sync
       if (activeVerificationId) {
         const syncResult = await verifyPhoneOtpWithSessionInfo(activeVerificationId, code, {
           phone: targetPhone,
           name: explicitName,
-          email: route?.params?.email || payload?.email,
-          companyName: payload?.companyName,
-          businessType: payload?.businessType,
-          gstNumber: payload?.gstNumber,
-          panNumber: payload?.panNumber,
+          email: isReviewerNumber ? 'apple-reviewer@hinchmart.com' : (route?.params?.email || payload?.email),
+          companyName: isReviewerNumber ? 'Apple Reviewer Test Workspace' : payload?.companyName,
+          businessType: isReviewerNumber ? 'Retail' : payload?.businessType,
+          gstNumber: isReviewerNumber ? undefined : payload?.gstNumber,
+          panNumber: isReviewerNumber ? undefined : payload?.panNumber,
           role: 'BUYER',
         });
 
@@ -236,31 +243,69 @@ export function OTPScreen({ route, navigation }: any) {
         }
         authStore.markPhoneRegistered(targetPhone);
 
-        // Post-login guest cart sync
-        try {
-          const guestItems = selectCartItems(store.getState());
-          const currentStoreId = (store.getState().cart as any)?.storeId;
-          if (Array.isArray(guestItems) && guestItems.length > 0) {
-            const syncPayload = guestItems.map((item: any) => ({
-              productId: item.productId,
-              quantity: item.quantity || 1,
-            }));
-            const mergedCart = await cartApi.syncGuestCart(syncPayload, currentStoreId);
-            if (mergedCart) store.dispatch(setServerCart(mergedCart));
-          } else {
-            const serverCart = await cartApi.getCart();
-            if (serverCart) store.dispatch(setServerCart(serverCart));
+        // For Apple Reviewer: isolate session to test data only
+        if (isReviewerNumber) {
+          const currentUser = authStore.getUser();
+          const currentToken = authStore.getToken() || '';
+          const currentRefreshToken = authStore.getRefreshToken() || '';
+          if (currentUser) {
+            authStore.saveSession({
+              user: {
+                ...currentUser,
+                firstName: 'Apple',
+                lastName: 'Reviewer',
+                fullName: 'Apple Reviewer',
+                email: 'apple-reviewer@hinchmart.com',
+                role: 'BUYER',
+                accountType: 'individual',
+                isVerified: true,
+                businessProfile: {
+                  id: 'biz_test_reviewer',
+                  companyName: 'Apple Reviewer Test Workspace',
+                  companyLogo: null,
+                  registrationNumber: 'TEST-PAN-1234',
+                  taxId: 'TEST-GST-1234',
+                  industry: 'Retail',
+                  website: '',
+                  description: 'Apple App Review Evaluation Session',
+                  employeeCount: '1-10',
+                  annualRevenue: '',
+                  foundedYear: 2026,
+                  certifications: ['Verified Reviewer'],
+                  isVerified: true,
+                },
+              },
+              accessToken: currentToken,
+              refreshToken: currentRefreshToken,
+            });
           }
-        } catch {
-          // Non-blocking: cart sync failure should not prevent login
-        }
-
-        // Execute pending Add to Cart action if user was prompted to login/register from Add to Cart
-        if (cartAuthGuard.hasPendingAction()) {
+        } else {
+          // Post-login guest cart sync for standard users
           try {
-            await cartAuthGuard.executePendingAction(store.dispatch);
-          } catch (pendingErr) {
-            console.warn('[OTPScreen] Pending cart action execution error:', pendingErr);
+            const guestItems = selectCartItems(store.getState());
+            const currentStoreId = (store.getState().cart as any)?.storeId;
+            if (Array.isArray(guestItems) && guestItems.length > 0) {
+              const syncPayload = guestItems.map((item: any) => ({
+                productId: item.productId,
+                quantity: item.quantity || 1,
+              }));
+              const mergedCart = await cartApi.syncGuestCart(syncPayload, currentStoreId);
+              if (mergedCart) store.dispatch(setServerCart(mergedCart));
+            } else {
+              const serverCart = await cartApi.getCart();
+              if (serverCart) store.dispatch(setServerCart(serverCart));
+            }
+          } catch {
+            // Non-blocking: cart sync failure should not prevent login
+          }
+
+          // Execute pending Add to Cart action if user was prompted to login/register from Add to Cart
+          if (cartAuthGuard.hasPendingAction()) {
+            try {
+              await cartAuthGuard.executePendingAction(store.dispatch);
+            } catch (pendingErr) {
+              console.warn('[OTPScreen] Pending cart action execution error:', pendingErr);
+            }
           }
         }
 
@@ -272,14 +317,16 @@ export function OTPScreen({ route, navigation }: any) {
         const returnedName = syncResult?.syncUser?.name;
         const returnedEmail = syncResult?.syncUser?.email;
         const isNameComplete = Boolean(
-          returnedName &&
+          isReviewerNumber ||
+          (returnedName &&
           !isGenericName(returnedName) &&
-          returnedName.trim().length > 0
+          returnedName.trim().length > 0)
         );
         const isComplete =
-          isNameComplete &&
+          isReviewerNumber ||
+          (isNameComplete &&
           syncResult?.syncUser?.profileComplete !== false &&
-          (syncResult?.syncUser as any)?.isProfileComplete !== false;
+          (syncResult?.syncUser as any)?.isProfileComplete !== false);
 
         const returnScreen = route?.params?.returnScreen;
         const returnParams = route?.params?.returnParams;
@@ -312,11 +359,11 @@ export function OTPScreen({ route, navigation }: any) {
         const syncResult = await verifyFirebasePhoneOtp(code, {
           phone: targetPhone,
           name: explicitName,
-          email: route?.params?.email || payload?.email,
-          companyName: payload?.companyName,
-          businessType: payload?.businessType,
-          gstNumber: payload?.gstNumber,
-          panNumber: payload?.panNumber,
+          email: isReviewerNumber ? 'apple-reviewer@hinchmart.com' : (route?.params?.email || payload?.email),
+          companyName: isReviewerNumber ? 'Apple Reviewer Test Workspace' : payload?.companyName,
+          businessType: isReviewerNumber ? 'Retail' : payload?.businessType,
+          gstNumber: isReviewerNumber ? undefined : payload?.gstNumber,
+          panNumber: isReviewerNumber ? undefined : payload?.panNumber,
           role: 'BUYER',
         });
 
@@ -325,50 +372,87 @@ export function OTPScreen({ route, navigation }: any) {
         }
         authStore.markPhoneRegistered(targetPhone);
 
-        // Post-login guest cart sync
-        try {
-          const guestItems = selectCartItems(store.getState());
-          const currentStoreId = (store.getState().cart as any)?.storeId;
-          if (Array.isArray(guestItems) && guestItems.length > 0) {
-            const syncPayload = guestItems.map((item: any) => ({
-              productId: item.productId,
-              quantity: item.quantity || 1,
-            }));
-            const mergedCart = await cartApi.syncGuestCart(syncPayload, currentStoreId);
-            if (mergedCart) store.dispatch(setServerCart(mergedCart));
-          } else {
-            const serverCart = await cartApi.getCart();
-            if (serverCart) store.dispatch(setServerCart(serverCart));
+        if (isReviewerNumber) {
+          const currentUser = authStore.getUser();
+          const currentToken = authStore.getToken() || '';
+          const currentRefreshToken = authStore.getRefreshToken() || '';
+          if (currentUser) {
+            authStore.saveSession({
+              user: {
+                ...currentUser,
+                firstName: 'Apple',
+                lastName: 'Reviewer',
+                fullName: 'Apple Reviewer',
+                email: 'apple-reviewer@hinchmart.com',
+                role: 'BUYER',
+                accountType: 'individual',
+                isVerified: true,
+                businessProfile: {
+                  id: 'biz_test_reviewer',
+                  companyName: 'Apple Reviewer Test Workspace',
+                  companyLogo: null,
+                  registrationNumber: 'TEST-PAN-1234',
+                  taxId: 'TEST-GST-1234',
+                  industry: 'Retail',
+                  website: '',
+                  description: 'Apple App Review Evaluation Session',
+                  employeeCount: '1-10',
+                  annualRevenue: '',
+                  foundedYear: 2026,
+                  certifications: ['Verified Reviewer'],
+                  isVerified: true,
+                },
+              },
+              accessToken: currentToken,
+              refreshToken: currentRefreshToken,
+            });
           }
-        } catch {
-          // Non-blocking: cart sync failure should not prevent login
-        }
-
-        // Execute pending Add to Cart action if user was prompted to login/register from Add to Cart
-        if (cartAuthGuard.hasPendingAction()) {
+        } else {
+          // Post-login guest cart sync
           try {
-            await cartAuthGuard.executePendingAction(store.dispatch);
-          } catch (pendingErr) {
-            console.warn('[OTPScreen] Pending cart action execution error:', pendingErr);
+            const guestItems = selectCartItems(store.getState());
+            const currentStoreId = (store.getState().cart as any)?.storeId;
+            if (Array.isArray(guestItems) && guestItems.length > 0) {
+              const syncPayload = guestItems.map((item: any) => ({
+                productId: item.productId,
+                quantity: item.quantity || 1,
+              }));
+              const mergedCart = await cartApi.syncGuestCart(syncPayload, currentStoreId);
+              if (mergedCart) store.dispatch(setServerCart(mergedCart));
+            } else {
+              const serverCart = await cartApi.getCart();
+              if (serverCart) store.dispatch(setServerCart(serverCart));
+            }
+          } catch {
+            // Non-blocking: cart sync failure should not prevent login
+          }
+
+          // Execute pending Add to Cart action if user was prompted to login/register from Add to Cart
+          if (cartAuthGuard.hasPendingAction()) {
+            try {
+              await cartAuthGuard.executePendingAction(store.dispatch);
+            } catch (pendingErr) {
+              console.warn('[OTPScreen] Pending cart action execution error:', pendingErr);
+            }
           }
         }
 
         setIsLoading(false);
 
         // Step 6: Frontend inspects the response:
-        // - If "name" is null: show Profile Completion screen (email is optional).
-        // - If all required details exist: navigate to Home/Dashboard.
         const returnedName = syncResult?.syncUser?.name;
         const returnedEmail = syncResult?.syncUser?.email;
         const isNameComplete = Boolean(
-          returnedName &&
+          isReviewerNumber ||
+          (returnedName &&
           !isGenericName(returnedName) &&
-          returnedName.trim().length > 0
+          returnedName.trim().length > 0)
         );
         const isComplete =
-          isNameComplete &&
+          isReviewerNumber ||
+          (isNameComplete &&
           syncResult?.syncUser?.profileComplete !== false &&
-          (syncResult?.syncUser as any)?.isProfileComplete !== false;
+          (syncResult?.syncUser as any)?.isProfileComplete !== false);
 
         const returnScreen = route?.params?.returnScreen;
         const returnParams = route?.params?.returnParams;
@@ -642,14 +726,22 @@ const styles = StyleSheet.create({
     color: '#0F172A',
   },
 
-  // Central Clean Card
+  // Central Clean Card (Responsive on Phone & iPad)
   cleanCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    padding: 20,
+    borderRadius: 16,
+    padding: 24,
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#E2E8F0',
+    width: '100%',
+    maxWidth: 440,
+    alignSelf: 'center',
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.06,
+    shadowRadius: 12,
+    elevation: 3,
   },
 
   // Icon Circle
