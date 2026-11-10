@@ -86,14 +86,14 @@
 - **Build Number**: `34` (Version: `1.0.28`)
 - **Build ID**: `9e061e70-200d-46d7-994c-ab66d3c96e5c`
 - **Live Build Dashboard**: [https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/9e061e70-200d-46d7-994c-ab66d3c96e5c](https://expo.dev/accounts/anushabazaar2/projects/hinchmart/builds/9e061e70-200d-46d7-994c-ab66d3c96e5c)
-- **Status**: **IN PROGRESS (Compiling on remote macOS runner & Auto-Submitting to Apple)**
+- **Status**: **PASSED & FINISHED (100% SUCCESS)**
+- **Production IPA Download URL**: [Download Production IPA v34 (KEkP-VD5LGPXlL3f3zb-wic9CLuifpTeHbIdihd8vfo.ipa)](https://expo.dev/artifacts/eas/KEkP-VD5LGPXlL3f3zb-wic9CLuifpTeHbIdihd8vfo.ipa)
 
 ### 2.9 App Store Connect & TestFlight Submission
 - **Submission ID**: `2df2133c-a179-4be7-8434-d521f3327873`
-- **Submission Status**: **SCHEDULED FOR AUTO-SUBMISSION (100% SUCCESS)**
+- **Submission Status**: **SUBMITTED & UPLOADED TO APPLE (100% SUCCESS)**
 - **App Store Connect App ID (`ascAppId`)**: `6821259523`
 - **App Store Connect API Key**: `8LR8F38773` (`[Expo] EAS Submit wLuLGdb-50`)
-- **Submission Dashboard**: [https://expo.dev/accounts/anushabazaar2/projects/hinchmart/submissions/2df2133c-a179-4be7-8434-d521f3327873](https://expo.dev/accounts/anushabazaar2/projects/hinchmart/submissions/2df2133c-a179-4be7-8434-d521f3327873)
 - **App Store Connect TestFlight URL**: [https://appstoreconnect.apple.com/apps/6821259523/testflight/ios](https://appstoreconnect.apple.com/apps/6821259523/testflight/ios)
 
 ---
