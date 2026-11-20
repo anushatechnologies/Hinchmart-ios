@@ -7,7 +7,7 @@
 import * as Location from 'expo-location';
 
 const GOOGLE_MAPS_API_KEY =
-  process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyBQHBaFfRCHgCGKIpSm-EOsVy8dExFToeA';
+  process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyD5oUpwY0vcqZlygScyHOnfk8xiGxRUoO4';
 
 const ANDROID_PACKAGE = 'com.hinch';
 const ANDROID_CERT_SHA1 = '169900607E47A7CAFD4926F9D1C7E947BD833EDB';
