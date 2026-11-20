@@ -18,20 +18,20 @@ import {
 export const firebaseConfig = {
   apiKey:
     process.env.EXPO_PUBLIC_FIREBASE_API_KEY ||
-    'AIzaSyDR2hKXdih5wM60Vzv-e23hMzVJEDaMuZI',
+    'AIzaSyDt9cd8QNc_ObflouOXryQ9zD_nczjPZ3U',
   authDomain:
     process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN ||
-    'hinchmart-6d0ba.firebaseapp.com',
+    'anushadeliverypartnerapp.firebaseapp.com',
   projectId:
-    process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID || 'hinchmart-6d0ba',
+    process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID || 'anushadeliverypartnerapp',
   storageBucket:
     process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET ||
-    'hinchmart-6d0ba.firebasestorage.app',
+    'anushadeliverypartnerapp.firebasestorage.app',
   messagingSenderId:
-    process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '728291955959',
+    process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '993685955029',
   appId:
     process.env.EXPO_PUBLIC_FIREBASE_APP_ID ||
-    '1:728291955959:ios:d99c9c5da29ce19f146ff2',
+    '1:993685955029:ios:4fda1a41998779260f9d5c',
 };
 
 // Initialize Firebase App singleton

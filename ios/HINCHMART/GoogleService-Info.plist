@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyDR2hKXdih5wM60Vzv-e23hMzVJEDaMuZI</string>
+	<string>AIzaSyDt9cd8QNc_ObflouOXryQ9zD_nczjPZ3U</string>
 	<key>GCM_SENDER_ID</key>
-	<string>728291955959</string>
+	<string>993685955029</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.hinchmart</string>
 	<key>PROJECT_ID</key>
-	<string>hinchmart-6d0ba</string>
+	<string>anushadeliverypartnerapp</string>
 	<key>STORAGE_BUCKET</key>
-	<string>hinchmart-6d0ba.firebasestorage.app</string>
+	<string>anushadeliverypartnerapp.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:728291955959:ios:d99c9c5da29ce19f146ff2</string>
+	<string>1:993685955029:ios:4fda1a41998779260f9d5c</string>
 </dict>
 </plist>
