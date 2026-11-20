@@ -14,7 +14,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.hinchmart",
-      "buildNumber": "35",
+      "buildNumber": "36",
       "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,
@@ -59,7 +59,7 @@
     },
     "android": {
       "package": "com.hinch",
-      "versionCode": 29,
+      "versionCode": 36,
       "googleServicesFile": "./google-services.json",
       "config": {
         "googleMaps": {
